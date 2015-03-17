@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-  $('.gitprofile').on('submit', function(e) {
+  $('.gitprofile').keyup(function(e) {
 
     e.preventDefault();
 
@@ -10,10 +10,12 @@ $(document).ready(function() {
 
     $.get(url, function(info) {
       $('.container').prepend(Mustache.render(template, info));
+      console.log(info);
     }).fail(function() {
-      $('.container').prepend("User not found")
+      $('.container').html('');
+      $('.container').prepend("User not found");
     }).always(function() {
-      $('input.username').val('');
+      $('input.username').val();
     });
   });
 });
