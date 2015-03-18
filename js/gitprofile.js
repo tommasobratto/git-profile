@@ -8,14 +8,28 @@ $(document).ready(function() {
 
     var template = $('template').html();
 
-    $.get(url, function(info) {
+    var APIinfo = $.get(url, function(info) {
       $('.container').prepend(Mustache.render(template, info));
       console.log(info);
-    }).fail(function() {
-      $('.container').html('');
-      $('.container').prepend("User not found");
-    }).always(function() {
-      $('input.username').val();
-    });
+    })
+
+    onFail(APIinfo);
+    autoClear(APIinfo);
+
+    function onFail(APIinfo) {
+      APIinfo.fail(function() {
+        $('.container').html('');
+        $('.container').prepend("User not found");
+      });
+    };
+
+    function autoClear() {
+      APIinfo.always(function() {
+        $('input.username').val();
+      });
+    };
+
   });
+  
 });
+
